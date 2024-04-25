@@ -131,7 +131,23 @@
 
         // Set the QR code URL as the href of the download link
         document.getElementById('download-link').href = qrCodeUrl;
+
+        const orderDetails = {
+            name: Clerk.user.firstName,
+            confirmationNumber: urlParams.get('confirmation'),
+            service: urlParams.get('service'),
+            dates: `${urlParams.get('start_date')} to ${urlParams.get('end_date')}`,
+            guests: urlParams.get('guests'),
+            location: urlParams.get('location'),
+            serviceFee: urlParams.get('service_fee'),
+            additionalCharges: urlParams.get('additional_charges'),
+            totalCost: totalCost
+        };
+
+        localStorage.setItem('lastBooking', JSON.stringify(orderDetails));
     });
+
+
 </script>
     
 </body>
