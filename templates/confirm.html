@@ -99,7 +99,7 @@
             document.getElementById('location-details').textContent = urlParams.get('location');
             document.getElementById('service-fee').textContent = `$${urlParams.get('service_fee')}`;
             document.getElementById('additional-charges').textContent = `$${urlParams.get('additional_charges')}`;
-            document.getElementById('total-cost').textContent = `$${parseInt(urlParams.get('service_fee')) + parseInt(urlParams.get('additional_charges'))}`;
+            document.getElementById('total-cost').textContent = `$${parseInt(urlParams.get('service_fee')) + parseInt(urlParams.get('additional_charges')) + 100}`;
         });
     </script>
 </body>
