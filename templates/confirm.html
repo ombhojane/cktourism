@@ -122,7 +122,7 @@
         document.getElementById('total-cost').textContent = `$${totalCost}`;
 
         // Concatenate all details into a single string
-        const allDetails = `Name: ${Clerk.user.firstName}, Confirmation: ${urlParams.get('confirmation')}, Service: ${urlParams.get('service')}, Dates: ${urlParams.get('start_date')} to ${urlParams.get('end_date')}, Guests: ${urlParams.get('guests')}, Location: ${urlParams.get('location')}, Service Fee: ${urlParams.get('service_fee')}, Additional Charges: ${urlParams.get('additional_charges')}, Total: ${parseInt(urlParams.get('service_fee')) + parseInt(urlParams.get('additional_charges')) + 100}`;
+        const allDetails = `Name: ${Clerk.user.firstName}, Confirmation: ${urlParams.get('confirmation')}, Service: ${urlParams.get('service')}, Dates: ${urlParams.get('start_date')} to ${urlParams.get('end_date')}, Guests: ${urlParams.get('guests')}, Location: ${urlParams.get('location')}, Service Fee: ${urlParams.get('service_fee')}, Additional Charges: ${urlParams.get('additional_charges')}, Total: $${totalCost}`;
 
         const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(allDetails)}`;
 
