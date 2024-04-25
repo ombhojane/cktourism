@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Confirmation</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            color: #333; 
+            background-color: #fff; 
+            margin: 0; 
+            padding: 0; 
+        }
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+        .left, .right {
+            flex: 1;
+            padding: 20px;
+        }
+        .left {
+            padding-left: 60px;
+        }
+        .header, .footer { 
+            background-color: #e8f5e9; 
+            padding: 10px; 
+            text-align: center; 
+        }
+        .highlight { 
+            color: #4CAF50; 
+        }
+        .btn { 
+            background-color: #4CAF50; 
+            color: white; 
+            padding: 10px 20px; 
+            text-decoration: none; 
+            border: none; 
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+        .right {
+            background-size: cover;
+            text-align: center;
+        }
+        @media (max-width: 800px) {
+            .container {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Booking Confirmed!</h1>
+    </div>
+    <div class="container">
+        <div class="left">
+            <div>
+                <h2 id="thank-you-note">Thank you for your booking!</h2>
+                <p>Your confirmation number is: <span class="highlight" id="confirmation-number">---</span></p>
+            </div>
+            <div>
+                <h3>Booking Details:</h3>
+                <p><strong>Service:</strong> <span id="service-name">---</span></p>
+                <p><strong>Dates:</strong> <span id="booking-dates">---</span></p>
+                <p><strong>Guests:</strong> <span id="guests-number">---</span></p>
+                <p><strong>Location:</strong> <span id="location-details">---</span></p>
+            </div>
+            <div>
+                <h3>Total Expenditure:</h3>
+                <p><strong>Service Fee:</strong> <span id="service-fee">---</span></p>
+                <p><strong>Additional Charges:</strong> <span id="additional-charges">---</span></p>
+                <p><strong>Total:</strong> <span class="highlight" id="total-cost">---</span></p>
+            </div>
+            <div>
+                <br>
+                <a href="../static/assets/qr.png" class="btn">Download Confirmation</a>
+            </div>
+        </div>
+        <div class="right">
+            <img src="../static/assets/qr.png" style="width: 400px;" alt="Booking QR Code">
+        </div>
+    </div>
+    <div class="footer">
+        Contact Us: <a href="https://www.chalokisaan.app/" target="_blank">www.chalokisaan.app</a> 
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+
+            document.getElementById('thank-you-note').textContent = `Thank you for your booking, ${urlParams.get('name')}!`;
+            document.getElementById('confirmation-number').textContent = urlParams.get('confirmation');
+            document.getElementById('service-name').textContent = urlParams.get('service');
+            document.getElementById('booking-dates').textContent = `${urlParams.get('start_date')} to ${urlParams.get('end_date')}`;
+            document.getElementById('guests-number').textContent = urlParams.get('guests');
+            document.getElementById('location-details').textContent = urlParams.get('location');
+            document.getElementById('service-fee').textContent = `$${urlParams.get('service_fee')}`;
+            document.getElementById('additional-charges').textContent = `$${urlParams.get('additional_charges')}`;
+            document.getElementById('total-cost').textContent = `$${parseInt(urlParams.get('service_fee')) + parseInt(urlParams.get('additional_charges'))}`;
+        });
+    </script>
+</body>
+</html>

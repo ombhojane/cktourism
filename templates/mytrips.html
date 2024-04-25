@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Trips</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { 
+            font-family: 'Arial', sans-serif; 
+            background-color: #f7f7f7; 
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .trip-card {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            padding: 20px;
+        }
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 160px;
+            height: 34px;
+            margin: 0 10px;
+        }
+        .toggle-switch input { 
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "Upcoming";
+            display: block;
+            text-align: center;
+            line-height: 26px;
+            width: 92px;
+            height: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+            color: black;
+            font-size: 10px;
+        }
+        input:checked + .slider:before {
+            content: "Previous";
+            transform: translateX(56px);
+        }
+        .slider.round {
+            border-radius: 34px;
+        }
+        .slider.round:before {
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="font-bold text-xl mb-4">My Trips</h1>
+        <div class="label-container">
+            <label class="toggle-switch">
+                <input type="checkbox" id="trip-toggle">
+                <span class="slider round"></span>
+            </label>
+        </div>
+        <br>
+        <div id="upcoming-trips" class="trip-section">
+            <h2 class="font-semibold text-lg mb-2">Upcoming Trips</h2>
+            <!-- Upcoming trips will be inserted here -->
+        </div>
+        <div id="past-trips" class="trip-section hidden">
+            <h2 class="font-semibold text-lg mb-2">Past Trips</h2>
+            <!-- Past trips will be inserted here -->
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const trips = {
+                upcoming: [
+                    { title: "Weekend Getaway to Mahabaleshwar", dates: "June 10-12, 2024", details: "Stay at Strawberry Farm Villa, exploring local markets and strawberry farms." },
+                    { title: "Adventure Trip to Rishikesh", dates: "July 20-25, 2024", details: "White water rafting, camping, and yoga retreats along the Ganges." }
+                ],
+                past: [
+                    { title: "Historical Tour of Rajasthan", dates: "January 15-22, 2024", details: "Visited Jaipur, Udaipur, and Jodhpur. Explored palaces and forts." },
+                    { title: "Beach Holiday in Goa", dates: "March 5-10, 2024", details: "Relaxed on Baga and Calangute beaches, enjoyed local seafood cuisine." }
+                ]
+            };
+
+            const upcomingTripsContainer = document.getElementById('upcoming-trips');
+            const pastTripsContainer = document.getElementById('past-trips');
+            const toggle = document.getElementById('trip-toggle');
+
+            function displayTrips(container, trips) {
+                container.innerHTML = '';
+                trips.forEach(trip => {
+                    const tripElement = document.createElement('div');
+                    tripElement.className = 'trip-card';
+                    tripElement.innerHTML = `
+                        <div class="trip-header">${trip.title}</div>
+                        <div class="trip-details">Dates: ${trip.dates}</div>
+                        <div class="trip-details">${trip.details}</div>
+                    `;
+                    container.appendChild(tripElement);
+                });
+            }
+
+            // Initially display upcoming trips
+            displayTrips(upcomingTripsContainer, trips.upcoming);
+
+            // Toggle between upcoming and past trips
+            toggle.addEventListener('change', function() {
+                if (this.checked) {
+                    upcomingTripsContainer.classList.add('hidden');
+                    pastTripsContainer.classList.remove('hidden');
+                    displayTrips(pastTripsContainer, trips.past);
+                } else {
+                    pastTripsContainer.classList.add('hidden');
+                    upcomingTripsContainer.classList.remove('hidden');
+                    displayTrips(upcomingTripsContainer, trips.upcoming);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

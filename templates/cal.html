@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eco Farm Calendar</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+</head>
+<body class="bg-gray-50 flex flex-col justify-center items-center min-h-screen">
+    <div class="container flex flex-row divide-x bg-gray-100 max-w-7xl mx-auto p-6 rounded-lg shadow">
+        <!-- Left side: Form for date and guest selection -->
+        <div class="flex-1 p-6 space-y-4">
+            <h2 class="text-2xl font-semibold text-center" id="availability-title">Check availability</h2>
+            <div>
+                <label for="date" class="block text-sm font-semibold text-gray-700 mb-2">Select Dates:</label>
+                <input type="text" id="date" class="block w-full p-2 bg-gray-100 border border-gray-300 rounded text-center" placeholder="Choose your dates">
+            </div>
+            <div>
+                <label for="guests" class="block text-sm font-semibold text-gray-700 mb-2">Number of Guests:</label>
+                <input type="number" id="guests" class="block w-full p-2 bg-gray-100 border border-gray-300 rounded text-center" placeholder="Enter number of guests" min="1">
+            </div>
+            <div class="flex justify-center space-x-2">
+                <button class="text-white bg-gray-600 px-4 py-2 rounded" onclick="window.location.href='home.html'">Cancel</button>
+                <button class="text-white bg-green-400 hover:bg-green-500 px-4 py-2 rounded" id="confirm-booking">Confirm Booking</button>
+            </div>
+        </div>
+        <!-- Right side: Order Summary -->
+        <div class="flex-1 p-6 space-y-4 flex flex-col justify-center">
+            <h2 class="text-2xl font-semibold text-center">Order Summary</h2>
+            <div class="space-y-2" id="pricing-details">
+                <!-- Pricing details injected here -->
+            </div>
+        </div>
+    </div>
+    <br>
+
+    <script>
+        flatpickr("#date", {
+            mode: "range",
+            minDate: "today",
+            dateFormat: "Y-m-d",
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const collectionData = JSON.parse(decodeURIComponent(urlParams.get('collection')));
+
+            document.getElementById('availability-title').textContent = `Check availability for ${collectionData.title}`;
+            const pricingDetails = document.getElementById('pricing-details');
+            pricingDetails.innerHTML = `
+                <p class="text-center text-gray-600">Service Fee: ${collectionData.pricePerNight}</p>
+                <p class="text-center text-gray-600">Additional Charges: $10</p>
+                <p class="text-center text-gray-600">Total: <span class="font-semibold">$${parseInt(collectionData.pricePerNight.slice(1)) + 10}</span></p>
+            `;
+
+            const confirmButton = document.getElementById('confirm-booking');
+            confirmButton.addEventListener('click', function() {
+                const dates = document.getElementById('date').value;
+                const guests = document.getElementById('guests').value;
+                const queryParams = new URLSearchParams({
+                    name: 'Customer Name', // This should be dynamically fetched if available
+                    service: collectionData.title,
+                    start_date: dates.split(' to ')[0],
+                    end_date: dates.split(' to ')[1],
+                    guests: guests,
+                    location: 'Mahableshwar', // This should be set based on the actual location data
+                    service_fee: collectionData.pricePerNight.slice(1),
+                    additional_charges: '10',
+                    confirmation: 'CK001' // This should be a unique ID generated for each booking
+                });
+                window.location.href = `/confirm?${queryParams.toString()}`;
+            });
+        });
+    </script>
+</body>
+</html>

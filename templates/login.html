@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app"></div>
+
+    <script
+        async
+        crossorigin="anonymous"
+        data-clerk-publishable-key="pk_test_dW5pZmllZC1jaGlwbXVuay04MC5jbGVyay5hY2NvdW50cy5kZXYk"
+        src="https://unified-chipmunk-80.clerk.accounts.dev/npm/@clerk/clerk-js@latest/dist/clerk.browser.js"
+        type="text/javascript">
+    </script>
+
+    <script>
+        window.addEventListener("load", async function () {
+            await Clerk.load();
+
+            // Redirect if already logged in
+            if (Clerk.user) {
+                window.location.href = "home.html";
+            } else {
+                const signInDiv = document.createElement("div");
+                document.getElementById("app").appendChild(signInDiv);
+                Clerk.mountSignIn(signInDiv, {
+                    // Configure the redirect after successful sign-in
+                    afterSignIn: () => window.location.href = "home.html"
+                });
+            }
+        });
+    </script>
+</body>
+</html>

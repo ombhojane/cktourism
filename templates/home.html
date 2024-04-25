@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chalo Kisaan</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    /* Categories buttons styles */
+    #categories-grid div {
+      box-shadow: 0px 3px 6px #00000029;
+      border-radius: 20px;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    #categories-grid i {
+      margin-right: 10px;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+      }
+    }
+
+    @media (max-width: 1024px) {
+      .container {
+        padding-left: 2rem;
+        padding-right: 2rem;
+      }
+    }
+
+    /* Custom styles */
+    .hero-image {
+      height: 450px;
+      background-image: url('https://source.unsplash.com/random/1200x400?rural');
+      background-size: cover;
+      background-position: center;
+      transition: background-image 0.5s ease-in-out;
+    }
+
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background-color: #f7f7f7;
+    }
+    .navbar, footer {
+      background-color: #ffffff;
+      box-shadow: 0 2px 4px 0 rgba(0,0,0,.1);
+    }
+
+    /* Improved button and input styles */
+    button, input[type="search"] {
+      border: none;
+      outline: none;
+      height: 40px;
+    }
+
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 0 20px;
+    }
+
+    input[type="search"] {
+      padding: 0 15px;
+      width: 60%;
+    }
+  </style>
+</head>
+<body class="bg-white">
+  <header class="bg-white">
+    <nav class="container mx-auto px-4 sm:px-6 lg:px-8 py-4 bg-transparent">
+        <div class="flex justify-between items-center">
+          <div class="flex items-center">
+            <a href="#" class="text-2xl font-bold">Chalo Kisaan</a>
+          </div>
+          <div class="flex items-center space-x-6">
+            <a href="#" class="text-lg hover:text-green-600">Explore</a>
+            <a href="/mytrip" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 text-lg">My Trips</a>
+            <div id="user-button"></div>
+          </div>
+        </div>
+      </nav>
+  </header>
+
+  <div id="app" style="margin-left: 30px; font-weight: bold; font-size: 32px;"></div>
+      <p><span id="user-name"></span></p>
+    </div>
+
+<script
+  async
+  crossorigin="anonymous"
+  data-clerk-publishable-key="pk_test_dW5pZmllZC1jaGlwbXVuay04MC5jbGVyay5hY2NvdW50cy5kZXYk"
+  src="https://unified-chipmunk-80.clerk.accounts.dev/npm/@clerk/clerk-js@4/dist/clerk.browser.js"
+  type="text/javascript">
+</script>
+
+<script>
+  window.addEventListener("load", async function () {
+      await Clerk.load();
+
+      if (Clerk.user) {
+                document.getElementById("app").innerHTML = `
+                    <h1>Welcome, ${Clerk.user.firstName}!</h1>
+                        <div id="user-button"></div>
+                `;
+                Clerk.mountUserButton(document.getElementById("user-button"));
+            } else {
+          window.location.href = "/login"; // Redirect back to login if not logged in
+      }
+  });
+</script>
+
+
+  <main class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <section class="mt-8">
+      <h2 class="text-2xl font-bold px-3 py-3 text-center" style="font-size: 2rem;">Escape to Nature's Embrace</h2>
+      <div class="hero-image rounded-lg relative"></div>
+    </section>
+
+    <section id="dynamic-categories" class="my-8 px-[15%]">
+      <div id="categories-grid" class="flex flex-wrap justify-center gap-4">
+        <!-- Cards will be added here dynamically -->
+      </div>
+    </section>
+
+    <section id="featured-collections" class="my-8">
+      <h2 class="text-2xl font-bold text-gray-800">Featured Collections</h2>
+      <div class="text-right mb-4">
+        <a href="#" class="text-green-600 font-semibold hover:underline">See More</a>
+      </div>
+      <div id="collections-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5 mt-4">
+        <!-- Cards will be added here dynamically -->
+      </div>
+    </section>
+  </main>
+
+  <footer class="bg-white shadow mt-8">
+    <div class="container mx-auto px-6 py-4">
+      <div class="flex justify-between items-center">
+        <span class="text-sm text-gray-600">&copy; 2024 Chalo Kisaan</span>
+        <div class="flex space-x-4">
+          <a href="#" class="text-gray-600 hover:text-green-600"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="text-gray-600 hover:text-green-600"><i class="fab fa-twitter"></i></a>
+          <a href="#" class="text-gray-600 hover:text-green-600"><i the="fab fa-instagram"></i></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+  const categories = [
+    { icon: "fas fa-campground", name: "Countryside" },
+    { icon: "fas fa-tree", name: "Forest" },
+    { icon: "fas fa-mountain", name: "Mountain" },
+    { icon: "fas fa-water", name: "Lake" },
+    { icon: "fas fa-umbrella-beach", name: "Beach" }
+  ];
+  const categoriesGrid = document.getElementById('categories-grid');
+  categories.forEach(category => {
+    const categoryHtml = `<div onclick="location.href='/review?category=${encodeURIComponent(category.name)}'" class="flex items-center space-x-2 bg-white border-2 rounded-md p-2 cursor-pointer">
+                            <i class="${category.icon} text-lg"></i>
+                            <span class="font-medium">${category.name}</span>
+                          </div>`;
+    categoriesGrid.innerHTML += categoryHtml;
+  });
+
+  const featuredCollections = [
+    {
+      title: "Farms",
+      imageUrl: "https://source.unsplash.com/random/400x200?farms",
+      properties: "80 properties",
+      pricePerNight: "30/night",
+      photos: ["https://plus.unsplash.com/premium_photo-1664123873245-bd178d77ca19?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8ZmFybXxlbnwwfHwwfHx8MA%3D%3D", "https://images.unsplash.com/photo-1444858291040-58f756a3bdd6?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZmFybXxlbnwwfHwwfHx8MA%3D%3D", "https://images.unsplash.com/photo-1454179083322-198bb4daae41?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fGZhcm18ZW58MHx8MHx8fDA%3D"],
+      amenities: ["Wifi", "Parking", "Pets Allowed"],
+      reviews: [
+        { name: "Alice", rating: 5, comment: "Beautiful place, loved every moment!" },
+        { name: "Bob", rating: 4, comment: "Great experience, will come again." }
+      ]
+    },
+    {
+      title: "Cottages",
+      imageUrl: "https://images.unsplash.com/photo-1588880331179-bc9b93a8cb5e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Y290dGFnZXxlbnwwfHwwfHx8MA%3D%3D",
+      properties: "120 properties",
+      pricePerNight: "$50/night",
+      photos: ["https://images.unsplash.com/photo-1588880331179-bc9b93a8cb5e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Y290dGFnZXxlbnwwfHwwfHx8MA%3D%3D", "https://images.unsplash.com/photo-1509648033237-ae6ef40c2838?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8Y290dGFnZXxlbnwwfHwwfHx8MA%3D%3D", "https://plus.unsplash.com/premium_photo-1683134448504-bfd9246be025?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Y290dGFnZXxlbnwwfHwwfHx8MA%3D%3D"],
+      amenities: ["Fireplace", "Lake view", "Private dock"],
+      reviews: [
+        { name: "Carol", rating: 5, comment: "Stunning views, very cozy!" },
+        { name: "Dave", rating: 4, comment: "Perfect getaway spot." }
+      ]
+    },
+    {
+      title: "Villas",
+      imageUrl: "https://source.unsplash.com/random/400x200?villa",
+      properties: "50 properties",
+      pricePerNight: "$100/night",
+      photos: ["https://images.unsplash.com/photo-1709830306540-dcd4c02bf394?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8dmlsbGFnZSUyMHZpbGxhfGVufDB8fDB8fHww", "https://images.unsplash.com/photo-1688733962303-48c860c3f92d?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fHZpbGxhZ2UlMjB2aWxsYXxlbnwwfHwwfHx8MA%3D%3D"],
+      amenities: ["Infinity pool", "Private chef", "Gym"],
+      reviews: [
+        { name: "Eve", rating: 5, comment: "Luxurious stay, loved every bit!" },
+        { name: "Frank", rating: 4, comment: "Great service, will recommend." }
+      ]
+    },
+    {
+      title: "Tents",
+      imageUrl: "https://source.unsplash.com/random/400x200?tent",
+      properties: "30 properties",
+      pricePerNight: "$20/night",
+      photos: ["https://images.unsplash.com/photo-1688733962303-48c860c3f92d?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fHZpbGxhZ2UlMjB2aWxsYXxlbnwwfHwwfHx8MA%3D%3D", "https://images.unsplash.com/photo-1471115853179-bb1d604434e0?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fHRlbnRzfGVufDB8fDB8fHww", "https://images.unsplash.com/photo-1571863533956-01c88e79957e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fHRlbnRzfGVufDB8fDB8fHww"],
+      amenities: ["Campfire", "Hiking trails", "Fishing"],
+      reviews: [
+        { name: "Grace", rating: 5, comment: "Amazing experience, will come back!" },
+        { name: "Harry", rating: 4, comment: "Great location, very peaceful." }
+      ]
+    },
+   
+  ];
+  const collectionsGrid = document.getElementById('collections-grid');
+  featuredCollections.forEach(collection => {
+    const collectionData = encodeURIComponent(JSON.stringify(collection));
+    const cardHtml = `<div class="bg-white rounded-lg shadow overflow-hidden" onclick="location.href='/review?collection=${collectionData}'">
+                        <img src="${collection.imageUrl}" alt="${collection.title}" class="w-full h-32 object-cover">
+                        <div class="p-4">
+                          <h3 class="font-semibold text-gray-800">${collection.title}</h3>
+                          <span class="text-gray-500">${collection.properties}</span>
+                          <span class="text-gray-500">${collection.pricePerNight}</span>
+                        </div>
+                      </div>`;
+    collectionsGrid.innerHTML += cardHtml;
+  });
+});
+
+  </script>
+</body>
+</html>
