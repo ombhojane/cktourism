@@ -115,7 +115,11 @@
         document.getElementById('location-details').textContent = urlParams.get('location');
         document.getElementById('service-fee').textContent = `$${urlParams.get('service_fee')}`;
         document.getElementById('additional-charges').textContent = `$${urlParams.get('additional_charges')}`;
-        document.getElementById('total-cost').textContent = `$${parseInt(urlParams.get('service_fee')) + parseInt(urlParams.get('additional_charges')) + 100}`;
+        const additionalCharges = parseInt(urlParams.get('additional_charges'));
+        const serviceFee = parseInt(urlParams.get('service_fee'));
+        const guests = parseInt(urlParams.get('guests'));
+        const totalCost = guests * serviceFee + additionalCharges;
+        document.getElementById('total-cost').textContent = `$${totalCost}`;
 
         // Concatenate all details into a single string
         const allDetails = `Name: ${Clerk.user.firstName}, Confirmation: ${urlParams.get('confirmation')}, Service: ${urlParams.get('service')}, Dates: ${urlParams.get('start_date')} to ${urlParams.get('end_date')}, Guests: ${urlParams.get('guests')}, Location: ${urlParams.get('location')}, Service Fee: ${urlParams.get('service_fee')}, Additional Charges: ${urlParams.get('additional_charges')}, Total: ${parseInt(urlParams.get('service_fee')) + parseInt(urlParams.get('additional_charges')) + 100}`;
