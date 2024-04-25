@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+            background-color: #fff;
+            color: #333;
+        }
+        .container {
+            background-color: #f0f0f0;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        h1 {
+            color: #4CAF50;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Order Details</h1>
+        <p><strong>Name:</strong> <span id="userName"></span></p>
+        <p><strong>Confirmation Number:</strong> <span id="confirmationNumber"></span></p>
+        <p><strong>Service:</strong> <span id="service"></span></p>
+        <p><strong>Dates:</strong> <span id="dates"></span></p>
+        <p><strong>Guests:</strong> <span id="guests"></span></p>
+        <p><strong>Location:</strong> <span id="location"></span></p>
+        <p><strong>Service Fee:</strong> <span id="serviceFee"></span></p>
+        <p><strong>Additional Charges:</strong> <span id="additionalCharges"></span></p>
+        <p><strong>Total Cost:</strong> <span id="totalCost"></span></p>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const lastBooking = JSON.parse(localStorage.getItem('lastBooking'));
+            if (lastBooking) {
+                document.getElementById('userName').textContent = lastBooking.name;
+                document.getElementById('confirmationNumber').textContent = lastBooking.confirmationNumber;
+                document.getElementById('service').textContent = lastBooking.service;
+                document.getElementById('dates').textContent = lastBooking.dates;
+                document.getElementById('guests').textContent = lastBooking.guests;
+                document.getElementById('location').textContent = lastBooking.location;
+                document.getElementById('serviceFee').textContent = `$${lastBooking.serviceFee}`;
+                document.getElementById('additionalCharges').textContent = `$${lastBooking.additionalCharges}`;
+                document.getElementById('totalCost').textContent = `$${lastBooking.totalCost}`;
+            } else {
+                document.querySelector('.container').innerHTML = '<p>No recent bookings found.</p>';
+            }
+        });
+    </script>
+</body>
+</html>
